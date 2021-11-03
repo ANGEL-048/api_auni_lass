@@ -5,5 +5,12 @@ export class CreateTaskDto{
     name : string;
 
    // @IsString()
-    description : string;
+    fecha_nacimiento : string;
+
+    semestre : string;
+
+    grado : string;
+
+
+    
 }

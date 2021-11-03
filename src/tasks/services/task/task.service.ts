@@ -21,7 +21,6 @@ export class TaskService {
   }
 
   public async getOne(id: string) {
-    console.log('asa')
     return await this.taskRepository.findOne(id)
   }
 

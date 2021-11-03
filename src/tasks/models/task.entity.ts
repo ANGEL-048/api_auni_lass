@@ -10,6 +10,27 @@ export class Task {
   name: string;
 
   @Column()
-  description: string;
+  fecha_nacimiento: string;
+
+  @Column()
+  semestre: string;
+
+  @Column()
+  grado: string;
+
+}
+
+
+@Entity()
+export class Materias {
+
+  @PrimaryGeneratedColumn('uuid')
+  id?: string;
+
+  @Column()
+  name: string;
+
+  @Column()
+  creditos: string;
 
 }

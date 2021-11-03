@@ -21,7 +21,8 @@ export class TaskController {
 	@Get(':id')
   	public async getTask(@Param('id') id: string) {
 	    return await this.taskService.getOne(id)
-  	}
+
+	}
 
 	@Post()
   	public async createTask(@Body() dto: CreateTaskDto ){
@@ -41,14 +42,5 @@ export class TaskController {
 	public async deleteTask(@Param('id') id: string) {
 		return this.taskService.deleteOne( id )
 	}
-
-	/* @Get()
-	public async newTask( @Body('name')name : String){
-	  console.log(`${name}`);
-	  return {
-		message : `el usuario es  ${name} y la descripcion es `
-	  };
-	} */
-
 }	
 
