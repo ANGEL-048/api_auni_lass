@@ -170,7 +170,7 @@ describe('TaskService_Materias', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [TaskService_Materias, 
       {
-        provide: getRepositoryToken(Alumnos),
+        provide: getRepositoryToken(Materias),
         useValue: {
           save: jest.fn().mockResolvedValue(mockMaterias),
           findOne: jest.fn().mockResolvedValue(materiasGet),
