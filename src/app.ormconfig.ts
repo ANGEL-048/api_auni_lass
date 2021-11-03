@@ -1,6 +1,6 @@
 import { ConnectionOptions } from "typeorm";
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
-import { Task } from "./tasks/models/task.entity";
+import { Alumnos, Materias } from "./tasks/models/task.entity";
 
 require('dotenv').config()
 
@@ -12,7 +12,7 @@ const config: ConnectionOptions = {
   username: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASS,
   database: process.env.MYSQL_DATABASE,
-  entities: [Task],
+  entities: [Alumnos,Materias],
   synchronize: true,
   namingStrategy: new SnakeNamingStrategy(),
   migrationsRun: true,

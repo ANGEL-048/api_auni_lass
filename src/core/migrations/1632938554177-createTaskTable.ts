@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 export class createTaskTable1632938554177 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    const tableTask = new Table({
+    const tableAlumnos = new Table({
       name: 'alumnos', columns: [
         {
           name: 'id',
@@ -41,7 +41,7 @@ export class createTaskTable1632938554177 implements MigrationInterface {
 
 
     const tableMateria = new Table({
-      name: 'materia', columns: [
+      name: 'materias', columns: [
         {
           name: 'id',
           type: 'VARCHAR',
@@ -64,16 +64,16 @@ export class createTaskTable1632938554177 implements MigrationInterface {
 
     );
 
-    await queryRunner.createTable(tableTask);
+    await queryRunner.createTable(tableAlumnos);
     await queryRunner.createTable(tableMateria);
   }
   
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    const tableTask = await queryRunner.getTable('alumnos');
+    const tableAlumnos = await queryRunner.getTable('alumnos');
 
-    if (undefined !== tableTask) {
-      await queryRunner.dropTable(tableTask);
+    if (undefined !== tableAlumnos) {
+      await queryRunner.dropTable(tableAlumnos);
     }
   }
 
