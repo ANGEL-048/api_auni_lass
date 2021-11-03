@@ -200,10 +200,9 @@ describe('TaskService_Materias', () => {
   })
 
   it('get all task success', async () => {
-    
     const find = await service.getMany();
     console.log(find);
-    expect(find).toEqual(allTask)
+    expect(find).toEqual(allMaterias)
     
   })
 
