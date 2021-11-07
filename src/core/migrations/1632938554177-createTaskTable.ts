@@ -35,10 +35,7 @@ export class createTaskTable1632938554177 implements MigrationInterface {
       ]
     }
     
-    
-    
     );
-
 
     const tableMateria = new Table({
       name: 'materias', columns: [
@@ -64,8 +61,42 @@ export class createTaskTable1632938554177 implements MigrationInterface {
 
     );
 
+
+    // tabla de calificaciones
+    // contenido
+    // califinaciones o notas por parciales
+    const tableAlumnos_Materia = new Table({
+      name: 'alumno_materia', columns: [
+        {
+          name: 'id',
+          type: 'VARCHAR',
+          length: '36',
+          isPrimary: true,
+          generationStrategy: 'uuid'
+        },
+        {
+          name: 'id_name',
+          type: 'VARCHAR',
+          length: '36'
+        },
+        {
+          name: 'id_materia',
+          type: 'VARCHAR',
+          length: '36'
+        }
+      ]
+    }
+
+    );
+
+
+
+
+
+
     await queryRunner.createTable(tableAlumnos);
     await queryRunner.createTable(tableMateria);
+    await queryRunner.createTable(tableAlumnos_Materia);
   }
   
 
@@ -84,6 +115,15 @@ export class createTaskTable1632938554177 implements MigrationInterface {
       await queryRunner.dropTable(tableMateria);
     }
   }
+
+  public async down3(queryRunner: QueryRunner): Promise<void> {
+    const tableAlumno_Materia = await queryRunner.getTable('alumno_materia');
+
+    if (undefined !== tableAlumno_Materia) {
+      await queryRunner.dropTable(tableAlumno_Materia);
+    }
+  }
+
 
 
 }

@@ -1,9 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { CreateTaskDto, CreateTaskDto_Materias } from '../../dtos/createTask.dto';
-import { editTaskDto, editTaskDto_Materias } from '../../dtos/editTask.dto';
-import { Alumnos, Materias } from '../../models/task.entity';
-import { TaskService, TaskService_Materias } from './task.service';
+import { CreateTaskDto } from '../../dtos/createTask.dto';
+import {  CreateTaskDto_Materias } from '../../dtos/createTaskMateria.dto';
+import { CreateTaskDtoAlumno_Materia } from '../../dtos/createTaskAlumno_Materia.dto';
+
+
+import { editTaskDto } from '../../dtos/editTask.dto';
+import { editTaskDto_Materias } from '../../dtos/editTaskMateria.dto';
+import { editTaskDtoAlumno_Materias } from '../../dtos/editTaskAlumno_Materia.dto';
+
+import { Alumnos} from '../../models/task.entity';
+import { Materias } from '../../models/task.entityMateria';
+import {Alumno_Materia } from '../../models/task.entityAlumno_Materia';
+
+
+import { TaskService, TaskServiceAlumno_Materia, TaskService_Materias } from './task.service';
 
 
 const mockTask = new CreateTaskDto();
@@ -123,7 +134,7 @@ describe('TaskService', () => {
   })
 });
 
-////////////////////////////////
+//////////////////////////////// MATERIA
 
 
 const mockMaterias = new CreateTaskDto_Materias();
@@ -132,7 +143,7 @@ mockMaterias.creditos = '10';
 
 
 const materiasGet = new Materias();
-materiasGet.id = 'e635dffc-f48f-42e7-b8de-f4a7f654ac81';
+materiasGet.id = 'e0822032-ca1e-44ac-9f9b-95c215a1ff26';
 materiasGet.name = 'luis';
 materiasGet.creditos = '9';
 
@@ -207,7 +218,7 @@ describe('TaskService_Materias', () => {
   })
 
   it('get a task success', async() =>{
-    const idMaterias = "e635dffc-f48f-42e7-b8de-f4a7f654ac81"
+    const idMaterias = "e0822032-ca1e-44ac-9f9b-95c215a1ff26"
     const savedId = await service.getOne(idMaterias)
 
     expect(savedId.id).toEqual(idMaterias);
@@ -228,5 +239,114 @@ describe('TaskService_Materias', () => {
     const deleteMaterias = await service.deleteOne(idDeleteMateria)
     console.log(deleteMaterias)
     expect(deleteMaterias ).toEqual(deleteMaterias)
+  })
+});
+
+////////////ALUMNO_MATERIA
+
+
+
+const mockAlumno_Materias = new CreateTaskDtoAlumno_Materia();
+mockAlumno_Materias.id_name = 'TastTest';
+mockAlumno_Materias.id_materia = '10';
+
+
+const Alumno_materiasGet = new Alumno_Materia();
+Alumno_materiasGet.id = '87409c22-3ede-4877-959c-f12aed23ceb4';
+Alumno_materiasGet.id_name = 'luis';
+Alumno_materiasGet.id_materia = '9';
+
+
+const Alumno_Materias2 = new Alumno_Materia();
+Alumno_Materias2.id = '364a9187-8956-4a9f-b285-a10b82cb4413';
+Alumno_Materias2.id_name = 'juan';
+Alumno_Materias2.id_materia = '8';
+
+
+
+let allAlumno_Materias: Alumno_Materia[] = []
+
+allAlumno_Materias.push(Alumno_materiasGet);
+allAlumno_Materias.push(Alumno_Materias2);
+
+const deleteAlumno_Materias = new Alumno_Materia();
+deleteAlumno_Materias.id = 'ed19e6a1-3123-4daa-bad6-91222b63a468';
+deleteAlumno_Materias.id_name = 'luis_delete';
+deleteAlumno_Materias.id_materia = '4-delete';
+
+
+
+const updateAlumno_Materias = new Alumno_Materia();
+updateAlumno_Materias.id = '1cdc5364-c24d-4308-9283-5ebc0c4af8c0';
+updateAlumno_Materias.id_name = 'juan_delete';
+updateAlumno_Materias.id_materia = '10-update';
+
+
+
+describe('TaskServiceAlumno_Materias', () => {
+  let service: TaskServiceAlumno_Materia;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [TaskServiceAlumno_Materia, 
+      {
+        provide: getRepositoryToken(Alumno_Materia),
+        useValue: {
+          save: jest.fn().mockResolvedValue(mockAlumno_Materias),
+          findOne: jest.fn().mockResolvedValue(Alumno_materiasGet),
+          find: jest.fn().mockReturnValue(allAlumno_Materias),
+          delete: jest.fn().mockReturnValue(deleteAlumno_Materias),
+          update: jest.fn().mockResolvedValue(updateAlumno_Materias),
+        }
+      }],
+    }).compile();
+
+    service = await module.resolve(TaskServiceAlumno_Materia);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+
+  it('create task success', async () => {
+    const Alumno_Materia = new CreateTaskDtoAlumno_Materia();
+
+    Alumno_Materia.id_name = 'TastTest';
+    Alumno_Materia.id_materia = 'creditos-test';
+
+    const Alumno_MateriaSaved = await service.createOne(Alumno_Materia);
+
+    expect(Alumno_MateriaSaved.id_name).toEqual(mockAlumno_Materias.id_name);
+  })
+
+  it('get all task success', async () => {
+    const find = await service.getMany();
+    console.log(find);
+    expect(find).toEqual(allAlumno_Materias);
+    
+  })
+
+  it('get a task success', async() =>{
+    const idAlumno_Materias = "87409c22-3ede-4877-959c-f12aed23ceb4";
+    const savedId = await service.getOne(idAlumno_Materias);
+
+    expect(savedId.id).toEqual(idAlumno_Materias);
+  })
+
+  it('update task by id', async () => {
+    const newAlumno_Materia = new editTaskDtoAlumno_Materias();
+    newAlumno_Materia.id_name = "New Name of Task";
+    newAlumno_Materia.id_materia = "New credit";
+    const idTask = '1cdc5364-c24d-4308-9283-5ebc0c4af8c0';
+    const updateData = await service.editOne( idTask, newAlumno_Materia);
+    expect(newAlumno_Materia.id_name).toEqual(newAlumno_Materia.id_name);
+  });
+
+
+  it('delete task by id', async () => {
+    const idDeleteAlumno_Materia = 'ed19e6a1-3123-4daa-bad6-91222b63a468';
+    const deleteAlumno_Materias = await service.deleteOne(idDeleteAlumno_Materia);
+    console.log(deleteAlumno_Materias);
+    expect(deleteAlumno_Materias ).toEqual(deleteAlumno_Materias);
   })
 });

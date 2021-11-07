@@ -1,7 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
+
 @Entity()
-export class Alumnos {
+export class Materias {
 
   @PrimaryGeneratedColumn('uuid')
   id?: string;
@@ -10,16 +11,6 @@ export class Alumnos {
   name: string;
 
   @Column()
-  fecha_nacimiento: string;
-
-  @Column()
-  semestre: string;
-
-  @Column()
-  grado: string;
+  creditos: string;
 
 }
-
-
-
-
